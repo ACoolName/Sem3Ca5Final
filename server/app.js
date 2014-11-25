@@ -23,6 +23,7 @@ if (process.env.NODE_ENV || typeof global.SKIP_AUTHENTICATION == "undefined") {
 // Protected Routes (via /api routes with JWT)
     app.use('/userApi', expressJwt({secret: require("./security/secrets").secretTokenUser}));
     app.use('/adminApi', expressJwt({secret: require("./security/secrets").secretTokenAdmin}));
+    app.use('/rest', expressJwt({secret: require("./security/secrets").secretTokenAdmin}));
 }
 
 // view engine setup
@@ -43,31 +44,12 @@ app.use(express.static(path.join(__dirname, '../public/app')));
 app.use('/', routes);
 app.use('/adminApi', adminRest);
 app.use('/userApi', userRest);
-var Schema = mongoose.Schema;
-var Customer = new Schema({
-    name: { type: String, required: true },
-    comment: { type: String }
-});
-var CustomerModel = mongoose.model('Customer', Customer);
-function testmid (err, req, res, next) {
-    console.log("!!!");
-    return true;
-}
-restify.serve(app, CustomerModel);
+
 restify.serve(app, User, {plural: false,
-			 prefix:"/api",
+			 prefix:"/rest",
 			 version:"/v1",
 			 strict: true,
-			 prereq: testmid});
-
-
-// {
-//     "_id": "546084f1ae1bdfd0b9a8dd75",
-//     "userName": "Lars",
-//     "email": "lam@cphbusiness.dk",
-//     "pw": "test",
-//     "created": "2014-11-10T09:27:13.808Z"
-// }
+			 private: "__v"});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -99,7 +81,6 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 
 module.exports = app;
