@@ -1,23 +1,19 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myAppRename', [
+angular.module('AngularApp', [
     'ngRoute',
-    'myAppRename.controllers',
-    'myAppRename.directives',
-    'myAppRename.services',
-    'myAppRename.factories',
-    'myAppRename.filters',
-    'myAppRename.view1',
-    'myAppRename.view2',
-    'myAppRename.view3'
+    'AngularApp.controllers',
+    'AngularApp.directives',
+    'AngularApp.services',
+    'AngularApp.factories',
+    'AngularApp.filters',
+    'AngularApp.home',
+    'AngularApp.register'
 ]).
     config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/view1'});
+        $routeProvider.otherwise({redirectTo: '/home'});
     }])
     .config(function ($httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
     });
-
-
-

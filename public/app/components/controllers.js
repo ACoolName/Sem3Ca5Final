@@ -1,4 +1,4 @@
-angular.module('myAppRename.controllers', []).
+angular.module('AngularApp.controllers', []).
     controller('AppCtrl', function ($scope, $http, $window, $location) {
 
         function url_base64_decode(str) {
@@ -54,13 +54,6 @@ angular.module('myAppRename.controllers', []).
             $scope.isAdmin = false;
             $scope.isUser = false;
             delete $window.sessionStorage.token;
-            $location.path("/view1");
+            $location.path("/home");
         }
     })
-
-    .controller('MyCtrl2', function ($scope) {
-        // write MyCtrl2 here
-    });
-
-
-

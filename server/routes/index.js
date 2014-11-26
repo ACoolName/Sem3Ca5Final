@@ -20,6 +20,7 @@ router.post('/authenticate', function (req, res) {
         };
         // We are sending the profile inside the token
         var token = jwt.sign(profile, require("../security/secrets").secretTokenUser, { expiresInMinutes: 60 * 5 });
+        var t = jwt.
         res.json({ token: token });
         return;
     }

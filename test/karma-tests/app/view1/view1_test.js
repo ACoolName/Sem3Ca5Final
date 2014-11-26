@@ -1,10 +1,10 @@
 'use strict';
 
-describe('myAppRename.view1 module', function () {
+describe('myAppRename.home module', function () {
 
-    beforeEach(module('myAppRename.view1'));
+    beforeEach(module('myAppRename.home'));
 
-    describe('view1 controller', function () {
+    describe('home controller', function () {
 
         it('should ....', inject(function ($controller) {
             //spec body
