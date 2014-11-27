@@ -1,7 +1,7 @@
 'use strict';
 
-describe('myAppRename.filters', function () {
-    beforeEach(module('myAppRename'));
+describe('AngularApp.filters', function () {
+    beforeEach(module('AngularApp.filters'));
 
     describe('checkmark', function () {
 

@@ -1,8 +1,8 @@
 'use strict';
 
-describe('myAppRename.services', function () {
+describe('AngularApp.services', function () {
 
-    beforeEach(module('myAppRename.services'));
+    beforeEach(module('AngularApp.services'));
 
     describe('InfoService', function () {
 

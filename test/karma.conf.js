@@ -10,8 +10,9 @@ module.exports = function (config) {
             'public/app/*.js',
             'public/app/components/**/*.js',
             'public/app/components/*.js',
-            'public/app/view*/**/*.js',
+            'public/app/home/*.js',
             'test/karma-tests//app/view*/**/*.js',
+            'test/karma-tests/app/homepage/*.js',
             'test/karma-tests//app/components/*.js',
         ],
 

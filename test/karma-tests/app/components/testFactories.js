@@ -1,6 +1,6 @@
 describe('myAppRename.factories', function () {
 
-    beforeEach(module('myAppRename.factories'));
+    beforeEach(module('AngularApp.factories'));
 
     describe('InfoFactory', function () {
         var infoFactory;
@@ -8,9 +8,6 @@ describe('myAppRename.factories', function () {
             infoFactory = _InfoFactory_;
         }));
 
-        it('Should be Hello World from a Factory', function () {
-            expect(infoFactory.getInfo()).toBe("Hello World from a Factory");
-        });
     });
 
 

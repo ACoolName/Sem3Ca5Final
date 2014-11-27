@@ -9,20 +9,9 @@ angular.module('AngularApp.home', ['ngRoute'])
     }])
 
     .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
-        var obj=[{
-            name:"asd",
-            age:"something",
-            city:"something else"
-        },
-            {
-                name:"asd",
-                age:"asd",
-                city:"asd"
-            }]
-            console.log(Object.keys(obj));
 
-        //dealsFactory.getAllDeals().success(function(deals){
-            $scope.tableHeaders=Object.keys(obj[0])
-            $scope.deals = obj;
-        //})
+        dealsFactory.getAllDeals().success(function(deals){
+            $scope.tableHeaders=Object.keys(deals[0])
+            $scope.deals = deals;
+        })
     }]);
