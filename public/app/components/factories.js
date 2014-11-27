@@ -2,16 +2,7 @@
 
 /* Factories */
 
-angular.module('myAppRename.factories', []).
-    factory('InfoFactory', function () {
-        var info = "Hello World from a Factory";
-        var getInfo = function getInfo() {
-            return info;
-        }
-        return {
-            getInfo: getInfo
-        }
-    })
+angular.module('AngularApp.factories', [])
     .factory('authInterceptor', function ($rootScope, $q, $window) {
         return {
             request: function (config) {
@@ -28,7 +19,5 @@ angular.module('myAppRename.factories', []).
                 return $q.reject(rejection);
             }
         };
-    });
-
-
-;
+    })
+    .factory
