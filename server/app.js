@@ -9,6 +9,10 @@ var restify = require('express-restify-mongoose');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Origin = mongoose.model('Origin');
+var Class = mongoose.model('Class');
+var Unit = mongoose.model('Unit');
+var Product = mongoose.model('Product');
 var routes = require('./routes/index');
 
 var expressJwt = require('express-jwt');
@@ -18,11 +22,7 @@ var app = express();
 var adminToken = require("./security/secrets").secretTokenAdmin;
 
 //We can skip Authentication from our Unit Tests, but NEVER in production
-if (process.env.NODE_ENV || typeof global.SKIP_AUTHENTICATION == "undefined") {
-////Protected Routes (via /api routes with JWT)
-    app.use('/adminRest', expressJwt({secret: adminToken}));
-//    app.use('/rest', expressJwt({secret: require("./security/secrets").secretTokenUser}));
-}
+if (process.env.NODE_ENV || typeof global.SKIP_AUTHENTICATION == "undefined") {}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,19 +48,20 @@ function AllCanGetIt(req, res, next) {
     return expressJwt({secret: adminToken})(req, res, next);
 };
 
-restify.serve(app, User, {plural: false,
-    prefix: "/adminRest",
-    version: "/v1",
-    strict: true,
-    private: "__v"});
-
-restify.serve(app, User, {
+var options = {
     middleware: AllCanGetIt,
     plural: false,
     prefix: "/rest",
     version: "/v1",
     strict: true,
-    private: "__v"});
+    private: "__v"};
+
+restify.serve(app, Origin, options);
+restify.serve(app, Class, options);
+restify.serve(app, Unit, options);
+restify.serve(app, Product, options);
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
