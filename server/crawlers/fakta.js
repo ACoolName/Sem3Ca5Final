@@ -1,23 +1,17 @@
 var Crawler = require("crawler");
 var url = require('url');
 
-var site = 'http://www.netto.dk/tilbud/Pages/Ugens-tilbud.aspx';
-var productlist = '.element';
-var productname = "#hdproductTitle";
-var productDescription = "#hdShortDescription";
-var productImageURL = "#hdimageUrl";
-var productStartDate = "#hdStartDate";
-var productEndDate = "#hdEndDate";
+var site = "http://www.fakta.dk/tilbudsavis/produkter/tilbud.html";
+var productlist = '.catalogue-product';
+var productname = ".catalogue-name";
+var productprice = ".catalogue-price span";
 
 function extractItem(item, date, $) {
     var extract = function(search) {
-	return $(item).find(search)['0'].attribs.value;
+	return $(item).find(search)['0'].children[0].data;
     }
     return {'name': extract(productname),
-	    'description': extract(productDescription),
-	    'imageURL': extract(productImageURL),
-	    'startDate': extract(productStartDate),
-	    'endDate': extract(productEndDate),
+	    'price': extract(productprice),
 	    'date': date};
 }
 
@@ -34,7 +28,7 @@ function crawl(cb){
 	    var res = [];
 	    var isodate = new Date().toISOString();
 	    res = $(productlist).map(function(index, el) {
-		return [extractItem(el, isodate, $)];
+	    	return [extractItem(el, isodate, $)];
 	    });
 	    cb(res.get());
 	}
@@ -46,5 +40,3 @@ function crawl(cb){
 
 module.exports = {crawl: crawl,
 		  extractItem: extractItem}
-
-
