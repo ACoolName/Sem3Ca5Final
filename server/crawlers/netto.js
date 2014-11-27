@@ -44,6 +44,7 @@ function crawl(cb){
 
 }
 
+crawl(function (data) {console.log(data);});
 module.exports = {crawl: crawl,
 		  extractItem: extractItem}
 
