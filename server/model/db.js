@@ -57,4 +57,3 @@ var usersSchema = new mongoose.Schema({
 });
 
 mongoose.model('User', usersSchema, "testusers");
-
