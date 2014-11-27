@@ -1,19 +1,18 @@
 <div ng-controller="homeCtrl">
 
-<!--<div>-->
-    <!--<table class="table">-->
-        <!--<thead>-->
-            <!--<tr ng-repeat="thead in Object">-->
-                <!--<td>{{thead.key}}</td>-->
-            <!--</tr>-->
-        <!--</thead>-->
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th ng-repeat="thead in tableHeaders">{{thead}}</th>
+            </tr>
+            </thead>
 
-        <!--<tbody ng-repeat="tbody in Object.table_body">-->
-                <!--<td>{{tbody.value}}</td>-->
-        <!--</tbody>-->
-    <!--</table>-->
-<!--</div>-->
-
-        <div>
-        </div>
+            <tbody>
+            <tr ng-repeat="tbody in deals">
+                <td ng-repeat="value in tableHeaders">{{tbody[value]}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

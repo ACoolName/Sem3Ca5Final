@@ -8,11 +8,21 @@ angular.module('AngularApp.home', ['ngRoute'])
         });
     }])
 
-    .controller('homeCtrl',['$scope', function ($scope) {
-        var obj={
+    .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
+        var obj=[{
             name:"asd",
             age:"something",
             city:"something else"
-        }
-        console.log(Object.keys(obj));
+        },
+            {
+                name:"asd",
+                age:"asd",
+                city:"asd"
+            }]
+            console.log(Object.keys(obj));
+
+        //dealsFactory.getAllDeals().success(function(deals){
+            $scope.tableHeaders=Object.keys(obj[0])
+            $scope.deals = obj;
+        //})
     }]);
