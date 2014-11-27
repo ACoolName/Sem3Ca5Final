@@ -10,20 +10,18 @@ var methodOverride = require('method-override');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var routes = require('./routes/index');
-var adminRest = require('./routes/REST_Admin_API');
-var userRest = require('./routes/REST_Users_API');
 
 var expressJwt = require('express-jwt');
 
 var app = express();
 
+var adminToken = require("./security/secrets").secretTokenAdmin;
 
 //We can skip Authentication from our Unit Tests, but NEVER in production
 if (process.env.NODE_ENV || typeof global.SKIP_AUTHENTICATION == "undefined") {
-// Protected Routes (via /api routes with JWT)
-    app.use('/userApi', expressJwt({secret: require("./security/secrets").secretTokenUser}));
-    app.use('/adminApi', expressJwt({secret: require("./security/secrets").secretTokenAdmin}));
-    app.use('/rest', expressJwt({secret: require("./security/secrets").secretTokenAdmin}));
+////Protected Routes (via /api routes with JWT)
+    app.use('/adminRest', expressJwt({secret: adminToken}));
+//    app.use('/rest', expressJwt({secret: require("./security/secrets").secretTokenUser}));
 }
 
 // view engine setup
@@ -42,14 +40,27 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../public/app')));
 
 app.use('/', routes);
-app.use('/adminApi', adminRest);
-app.use('/userApi', userRest);
+
+function AllCanGetIt(req, res, next) {
+    if (req.method === 'GET') {
+        return next();
+    }
+    return expressJwt({secret: adminToken})(req, res, next);
+};
 
 restify.serve(app, User, {plural: false,
-			 prefix:"/rest",
-			 version:"/v1",
-			 strict: true,
-			 private: "__v"});
+    prefix: "/adminRest",
+    version: "/v1",
+    strict: true,
+    private: "__v"});
+
+restify.serve(app, User, {
+    middleware: AllCanGetIt,
+    plural: false,
+    prefix: "/rest",
+    version: "/v1",
+    strict: true,
+    private: "__v"});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
