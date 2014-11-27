@@ -19,11 +19,19 @@ angular.module('AngularApp.controllers', []).
         }
 
 
-        $scope.title = "ACoolName Semester Project";
-        $scope.username = "";
-        $scope.isAuthenticated = false;
-        $scope.isAdmin = false;
-        $scope.isUser = false;
+        if($window.sessionStorage.token != undefined) {
+            $scope.username = $window.sessionStorage.username;
+            $scope.isAuthenticated = true;
+            $scope.isAdmin = $window.sessionStorage.role == 'admin';
+            $scope.isUser = !$scope.isAdmin;
+        } else {
+            $scope.username = "";
+            $scope.isAuthenticated = false;
+            $scope.isAdmin = false;
+            $scope.isUser = false;
+        }
+
+        $scope.title = "Semester Project";
         $scope.message = '';
         $scope.error = null;
 
@@ -35,6 +43,8 @@ angular.module('AngularApp.controllers', []).
                     $scope.isAuthenticated = true;
                     var encodedProfile = data.token.split('.')[1];
                     var profile = JSON.parse(url_base64_decode(encodedProfile));
+                    $window.sessionStorage.username = profile.username;
+                    $window.sessionStorage.role = profile.role;
                     $scope.username = profile.username;
                     $scope.isAdmin = profile.role == "admin";
                     $scope.isUser = !$scope.isAdmin;
@@ -42,7 +52,7 @@ angular.module('AngularApp.controllers', []).
                 })
                 .error(function (data, status, headers, config) {
                     // Erase the token if the user fails to log in
-                    delete $window.sessionStorage.token;
+                    deleteSession();
                     $scope.isAuthenticated = false;
 
                     $scope.error = 'You failed to login. Invalid User or Password';
@@ -53,7 +63,13 @@ angular.module('AngularApp.controllers', []).
             $scope.isAuthenticated = false;
             $scope.isAdmin = false;
             $scope.isUser = false;
-            delete $window.sessionStorage.token;
+            deleteSession();
             $location.path("/home");
-        }
+        };
+
+        function deleteSession() {
+            delete $window.sessionStorage.token;
+            delete $window.sessionStorage.username;
+            delete $window.sessionStorage.role;
+        };
     })

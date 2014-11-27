@@ -12,6 +12,7 @@ router.get('/', function (req, res) {
 router.post('/authenticate', function (req, res) {
     //TODO: Go and get UserName Password from "somewhere"
     //if is invalid, return 401
+    console.log(req.body);
     if (req.body.username === 'student' && req.body.password === 'test') {
         var profile = {
             username: 'Bo the Student',
@@ -20,7 +21,6 @@ router.post('/authenticate', function (req, res) {
         };
         // We are sending the profile inside the token
         var token = jwt.sign(profile, require("../security/secrets").secretTokenUser, { expiresInMinutes: 60 * 5 });
-        var t = jwt.
         res.json({ token: token });
         return;
     }
