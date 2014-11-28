@@ -12,7 +12,7 @@ describe('AngularApp.home module', function () {
         ctrl = $controller('homeCtrl', {$scope: scope});
     }));
 
-    describe('homeCtrl controller functionality test in full isolation', function () {
+    describe('homeCtrl controller functionality test', function () {
 
         it('should exist', function () {
             expect(ctrl).toBeDefined();
