@@ -8,11 +8,11 @@ angular.module('AngularApp.home', ['ngRoute'])
         });
     }])
 
-    .controller('homeCtrl',['$scope', function ($scope) {
-        var obj={
-            name:"asd",
-            age:"something",
-            city:"something else"
-        }
-        console.log(Object.keys(obj));
+    .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
+
+        dealsFactory.getAllDeals().success(function(deals){
+            $scope.tableHeaders=Object.keys(deals[0]);
+            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
+            $scope.deals = deals;
+        })
     }]);

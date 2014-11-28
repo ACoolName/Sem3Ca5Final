@@ -20,4 +20,16 @@ angular.module('AngularApp.factories', [])
             }
         };
     })
-    .factory
+    .factory('dealsFactory', function ($http) {
+        var getAllDeals= function(){
+            return $http({
+                method:'GET',
+                url:'/rest/v1/Product'
+            })
+        }
+
+        return{
+            getAllDeals:getAllDeals
+        }
+
+    })
