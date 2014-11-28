@@ -2,18 +2,6 @@ var Crawler = require("crawler");
 var url = require('url');
 
 var site = "http://www.fakta.dk/tilbudsavis/produkter/tilbud.html";
-var productlist = '.catalogue-product';
-var productname = ".catalogue-name";
-var productprice = ".catalogue-price span";
-
-function extractItem(item, date, $) {
-    var extract = function(search) {
-	return $(item).find(search)['0'].children[0].data;
-    }
-    return {'name': extract(productname),
-	    'price': extract(productprice),
-	    'date': date};
-}
 
 /*
   Crawl function.
@@ -25,18 +13,13 @@ function crawl(cb){
 	maxConnections : 10,
 	// This will be called for each crawled page
 	callback : function (error, result, $) {
-	    var res = [];
-	    var isodate = new Date().toISOString();
-	    res = $(productlist).map(function(index, el) {
-	    	return [extractItem(el, isodate, $)];
-	    });
-	    cb(res.get());
+	    var Fakta = {Session:{}};
+	    eval($("script")['9'].children[0].data);
+	    cb(Fakta.Session.products);
 	}
     });
 
     nettoCrawler.queue(site);
-
 }
 
-module.exports = {crawl: crawl,
-		  extractItem: extractItem}
+module.exports = {crawl: crawl}

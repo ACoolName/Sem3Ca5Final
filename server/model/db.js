@@ -42,4 +42,33 @@ var usersSchema = new mongoose.Schema({
     created: { type: Date, default: new Date() }
 });
 
+var originSchema = new mongoose.Schema({
+    title: String
+});
+
+var classSchema = new mongoose.Schema({
+    title: String
+});
+
+var unitSchema = new mongoose.Schema({
+    title: String
+});
+
+var productSchema = new mongoose.Schema({
+    origin: Number,
+    price: Number,
+    title: String,
+    class: Number,
+    unit: Number,
+    date: Date,
+    imageLink: String,
+    startDate: Date,
+    endDate: Date
+});
+
+
 mongoose.model('User', usersSchema, "testusers");
+mongoose.model('Origin', originSchema, "origins");
+mongoose.model('Class', classSchema, "classes");
+mongoose.model('Unit', unitSchema, "units");
+mongoose.model('Product', productSchema, "products");
