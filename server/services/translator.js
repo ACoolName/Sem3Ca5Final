@@ -1,19 +1,14 @@
+// Code inspired/copy pasted from http://stackoverflow.com/a/8543979
 var translator = {};
-
 var EMAIL = "acoolnameca5@gmail.com";
-var PASS = "";
+var PASS = "";   //SET THIS BEFORE TESTING/DEPLOYMENT
 
 translator.translate = function (words, callback) {
     var GoogleSpreadsheet = require("google-spreadsheet");
     var my_sheet = new GoogleSpreadsheet('1az_qUonXkT6nOJKt1y5kvGAoZvAv3yUvbSYU6fsUw5Q');
-    // without auth -- read only
-    // # is worksheet id - IDs start at 1
 
-    // set auth to be able to edit/add/delete
     my_sheet.setAuth(EMAIL, PASS, function (err) {
-
         my_sheet.getInfo(function (err, sheet_info) {
-            // use worksheet object if you want to forget about ids
             sheet_info.worksheets[0].getRows(function (err, rows) {
                 var translateString = "";
                 words.forEach(function (e, index) {
@@ -49,7 +44,6 @@ translator.translate = function (words, callback) {
 //                        foo();
 //                    });
 //                });
-
             });
         });
     });
