@@ -1,3 +1,4 @@
+var db = require("./db");
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var crawler = require('../crawlers/netto');
