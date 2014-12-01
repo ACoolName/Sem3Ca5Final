@@ -27,7 +27,7 @@ injector.inject = function (callback) {
         });
         objectTranslator.translate(arr, "title", function () {
             Product.create(arr, function () {
-                callback(null);
+                callback(arr);
             });
         })
     });

@@ -21,6 +21,10 @@ function getPriceFromPris (string){
 
 injector.inject = function (callback) {
     crawler.crawl(function (data) {
+	if (data.length == 0){
+	    callback(null);
+	    return;
+	}
 	var tr = translator.translate;
 	var dat = Date.now();
 	var arr = data.map(function (el) {
@@ -32,8 +36,8 @@ injector.inject = function (callback) {
 	});
 	tr(arr, "title", function() {
 	    Product.create(arr, function (err) {
-		console.log("done!");
-		if (err) {};
+		callback(arr);
+		if (err) {callback(null)};
 	    });
 	});
     });
