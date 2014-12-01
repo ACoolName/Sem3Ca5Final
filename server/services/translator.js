@@ -1,7 +1,7 @@
 // Code inspired/copy pasted from http://stackoverflow.com/a/8543979
 var translator = {};
 var EMAIL = "acoolnameca5@gmail.com";
-var PASS = "";   //SET THIS BEFORE TESTING/DEPLOYMENT
+var PASS = "p4ssh4sh";   //SET THIS BEFORE TESTING/DEPLOYMENT
 
 translator.translate = function (words, callback) {
     var GoogleSpreadsheet = require("google-spreadsheet");
