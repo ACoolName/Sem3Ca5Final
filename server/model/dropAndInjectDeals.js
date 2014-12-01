@@ -3,13 +3,20 @@
   the crawlers for the deals to fill the db.
 */
 var db = require("./db");
+var mongoose = require('mongoose');
+var Product = mongoose.model('Product');
 var netto = require("./nettoInject");
 var fakta = require("./faktaInject");
-var Product = mongoose.model('Product');
 
 function doneLog(data){
-    console.log("done!");
+    if (data != null){
+	console.log("done! Inserting objs:" + data.length);
+    } else {
+	console.log("error!");
+    }
 }
 
-netto.start(doneLog);
-fakta.start(doneLog);
+Product.collection.drop(function(){
+    netto.start(doneLog);
+    fakta.start(doneLog);
+});

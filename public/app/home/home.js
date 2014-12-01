@@ -66,5 +66,8 @@ angular.module('AngularApp.home', ['ngRoute'])
             $scope.tableHeaders = Object.keys(deals[0]);
             $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
             $scope.deals = deals;
+	    $scope.deals.forEach(function (el){
+		el.origin= origins[el.origin];
+	    });
         })
     }]);
