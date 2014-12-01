@@ -20,30 +20,41 @@ angular.module('AngularApp.home', ['ngRoute'])
                 method: 'GET',
                 url: '/rest/v1/Origin'
             }).then(function (origins) {
-                console.log("origin success");
                 originInject = origins;
-                console.log(originInject);
 
                 $http({
                     method: 'GET',
                     url: '/rest/v1/Class'
                 }).then(function (classes) {
-                    console.log("class success");
                     classInject = classes;
-                    console.log(classInject);
 
                     $http({
                         method: 'GET',
                         url: '/rest/v1/Unit'
                     }).then(function (units) {
-                        console.log("unit success");
                         unitInject = units;
-                        console.log(unitInject);
 
-                        deals.forEach(function(entry) {
-                            entry.origin = originInject[entry.origin];
-                            entry.class = classInject[entry.class];
-                            entry.unit = unitInject[entry.unit];
+                        originInject = originInject.data;
+                        classInject = classInject.data;
+                        unitInject = unitInject.data;
+
+                        var maxLen = Math.max(originInject.length, classInject.length, unitInject.length);
+                        for(var i = 0; i < maxLen; i++) {
+                            if(i < originInject.length) {
+                                originInject[i] = originInject[i].title;
+                            }
+                            if(i < classInject.length) {
+                                classInject[i] = classInject[i].title;
+                            }
+                            if(i < unitInject.length) {
+                                unitInject[i] = unitInject[i].title;
+                            }
+                        }
+
+                        deals.forEach(function (entry) {
+                            entry.origin = originInject[parseInt(entry.origin)];
+                            entry.class = classInject[parseInt(entry.class)];
+                            entry.unit = unitInject[parseInt(entry.unit)];
                         });
                         console.log(deals);
                     }, function (err) {
@@ -59,15 +70,9 @@ angular.module('AngularApp.home', ['ngRoute'])
                 originInject = null;
             });
 
-            console.log();
-            deals.forEach(function (entry) {
-//                entry.origin = originInject[entry.origin];
-            });
             $scope.tableHeaders = Object.keys(deals[0]);
             $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
             $scope.deals = deals;
-	    $scope.deals.forEach(function (el){
-		el.origin= origins[el.origin];
-	    });
         })
-    }]);
+    }])
+;
