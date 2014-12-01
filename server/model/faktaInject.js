@@ -1,16 +1,7 @@
-var db = require("./db");
+var db = require("../model/db");
+var crawler = require("../crawlers/fakta");
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
-var crawler = require("../crawlers/fakta");
-var translator = require("../services/objectTranslator");
-
-
-var injector = {};
-
-injector.start = function (callback) {
-  injector.inject(callback);
-};
-
 
 function getPriceFromPris (string){
     string = string.replace(/,/g, '.');
@@ -19,24 +10,21 @@ function getPriceFromPris (string){
     return parseFloat(match[0]);
 }
 
-injector.inject = function (callback) {
+function injectToDB () {
     crawler.crawl(function (data) {
-	var tr = translator.translate;
 	var dat = Date.now();
 	var arr = data.map(function (el) {
 	    var ob = {origin: 2};
-	    ob.title = el.Titel.split('.').join("");
+	    ob.title = el.Titel;
 	    ob.price = getPriceFromPris(el.Pris);
 	    ob.date = dat;
 	    return ob;
 	});
-	tr(arr, "title", function() {
-	    Product.create(arr, function (err) {
-		console.log("done!");
-		if (err) {};
-	    });
+	Product.create(arr, function (err) {
+	    console.log("done!");
+	    if (err) {};
 	});
     });
 }
 
-module.exports = injector;
+injectToDB();
