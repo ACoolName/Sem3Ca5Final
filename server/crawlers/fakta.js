@@ -1,7 +1,8 @@
 var Crawler = require("crawler");
 var url = require('url');
 
-var site = "http://www.fakta.dk/tilbudsavis/produkter/tilbud.html";
+var site = "http://www.fakta.dk/tilbudsavis/produkter/naeste-uges-tilbud.html";
+//"http://www.fakta.dk/tilbudsavis/produkter/tilbud.html";
 
 /*
   Crawl function.
