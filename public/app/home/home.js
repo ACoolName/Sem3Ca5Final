@@ -11,9 +11,9 @@ angular.module('AngularApp.home', ['ngRoute'])
     .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
 
         dealsFactory.getAllDeals().success(function (deals) {
-            var originInject = "shit";
-            var classInject = "shit";
-            var unitInject = "shit";
+            var originInject = "";
+            var classInject = "";
+            var unitInject = "";
 
             dealsFactory.getOrigin().success(function (origins) {
                 originInject = origins;
@@ -38,6 +38,9 @@ angular.module('AngularApp.home', ['ngRoute'])
                         }
 
                         deals.forEach(function (entry) {
+                            if(entry.origin==1){
+                                entry.imageLink = 'http://www.netto.dk'+entry.imageLink
+                            }
                             entry.origin = originInject[parseInt(entry.origin)];
                             entry.class = classInject[parseInt(entry.class)];
                             entry.unit = unitInject[parseInt(entry.unit)];

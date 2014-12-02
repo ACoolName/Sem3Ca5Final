@@ -7,4 +7,11 @@ angular.module('AngularApp.filters', []).
         return function (input) {
             return input ? '\u2713' : '\u2718';
         };
-    });
+    }).
+    filter('isNetto',function(){
+        return function(input){
+            if(input.origin=='Netto'){
+
+            }
+        }
+    })

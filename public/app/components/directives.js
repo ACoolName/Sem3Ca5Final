@@ -1,15 +1,32 @@
-'use strict';
+"use strict";
 
 /* Directives */
 
-angular.module('AngularApp.directives', []).
-    directive('angularLinks', function () {
+angular.module("AngularApp.directives", []).
+    directive("dealsTableDisplay", function () {
         return {
-            restrict: 'AE',
-            replace: 'true',
-            template: '<ul style="list-style-type: none">' +
-                '<li><a href="http://www.sitepoint.com/practical-guide-angularjs-directives/">A practical Guide</a></li>' +
-                '<li><a href="http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-i-the-fundamentals">Creating Custom Directives</a></li>' +
-                '</ul>'
+            restrict: "AE",
+            replace: "true",
+            template: "<table class='table'>" +
+                        "<thead>" +
+                        "<tr>" +
+                        "<th ng-repeat='thead in tableHeaders'>{{thead}}</th>" +
+                        "</tr>" +
+                        "</thead>" +
+                        "<tbody>" +
+                "<tr ng-repeat='tbody in deals'>" +
+                        "<td ng-repeat='value in tableHeaders'>"+
+                            '<div ng-if="1==1"> <img src={{thead[value]}}>{{thead[value]}} </div>'+
+            "</td>" +
+                        "</tr>" +
+                        "</tbody>" +
+                        "</table>"
         };
+    }).
+    directive("searchBar",function(){
+        return{
+            restrict:"AE",
+            replace:"true",
+            template:""
+        }
     });
