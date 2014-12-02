@@ -22,7 +22,7 @@ injector.inject = function (callback) {
             p.endDate = e.endDate;
             p.date = e.date;
             p.unit = 0;
-            p.price = 0;
+            p.price = e.price;
             return p;
         });
         objectTranslator.translate(arr, "title", function () {
