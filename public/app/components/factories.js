@@ -26,7 +26,8 @@ angular.module('AngularApp.factories', [])
                 method:'GET',
                 url:'/rest/v1/Product'
             })
-        }
+        };
+        getAllDeals.http = $http;
 
         return{
             getAllDeals:getAllDeals
