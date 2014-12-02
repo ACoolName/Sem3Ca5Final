@@ -32,6 +32,9 @@ injector.inject = function (callback) {
 	    ob.title = el.Titel.split('.').join("");
 	    ob.price = getPriceFromPris(el.Pris);
 	    ob.date = dat;
+	    ob.imageLink = el.ImageUrls.Lille;
+	    ob.startDate = el.GyldigFraDato;
+	    ob.endDate = el.GyldigTilDato;
 	    return ob;
 	});
 	tr(arr, "title", function() {
