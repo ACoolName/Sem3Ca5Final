@@ -1,5 +1,7 @@
 'use strict';
 
+global.JPA = false;
+
 var db = require('../../server/model/db');
 var mongoose = require("mongoose");
 var Product = mongoose.model('Product');

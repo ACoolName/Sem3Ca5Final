@@ -32,13 +32,11 @@ process.on('SIGINT', function () {
     });
 });
 
-
-/** User SCHEMA **/
-/** Replace this Schema with your own(s) **/
 var usersSchema = new mongoose.Schema({
-    userName: String,
+    username: {type: String, unique: true},
     email: {type: String, unique: true},
-    pw: String,
+    role: String,
+    authid: String,
     created: { type: Date, default: new Date() }
 });
 
@@ -67,7 +65,7 @@ var productSchema = new mongoose.Schema({
 });
 
 
-mongoose.model('User', usersSchema, "testusers");
+mongoose.model('User', usersSchema, "users");
 mongoose.model('Origin', originSchema, "origins");
 mongoose.model('Class', classSchema, "classes");
 mongoose.model('Unit', unitSchema, "units");
