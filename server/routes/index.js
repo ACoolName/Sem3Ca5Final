@@ -46,11 +46,30 @@ router.post('/authenticate', function (req, res) {
     }
 
     User.get(req.body.username, function (err, user) {
-        request.get('http://acoolname.cloudapp.net/customer/' + user.authid, function (error, response, body) {
+        request.get('http://localhost:9000/customer/' + user.authid, function (error, response, body) {
+            if(response.statusCode != 200) {
+                res.status(500).send('Internal server error');
+                return;
+            }
             var hash = JSON.parse(body).hash;
             bcrypt.compare(req.body.password, hash, function(err, correct) {
                 if(correct == true) {
-                    res.json({ token: "kkdk" });
+                    var profile = {
+                        username: user.username,
+                        role: user.role,
+                        id: user._id
+                    };
+                    var secret;
+                    if(user.role === "admin") {
+                        secret = require("../security/secrets").secretTokenAdmin;
+                    } else if (user.role === "user") {
+                        secret = require("../security/secrets").secretTokenUser;
+                    } else {
+                        res.status(500).send('Internal server error');
+                        return;
+                    }
+                    var token = jwt.sign(profile, secret, { expiresInMinutes: 60 * 5 });
+                    res.json({ token: token });
                 } else {
                     res.status(401).send('Wrong user or password');
                 }
