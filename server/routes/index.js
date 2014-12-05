@@ -46,7 +46,11 @@ router.post('/authenticate', function (req, res) {
     }
 
     User.get(req.body.username, function (err, user) {
-        request.get('http://localhost:9000/customer/' + user.authid, function (error, response, body) {
+        if(user == null) {
+            res.status(404).send('No such with that username');
+            return;
+        }
+        request.get('http://acoolname.cloudapp.net/customer/' + user.authid, function (error, response, body) {
             if(response.statusCode != 200) {
                 res.status(500).send('Internal server error');
                 return;

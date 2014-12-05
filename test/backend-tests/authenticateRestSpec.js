@@ -45,7 +45,7 @@ describe('REST API for /authenticate', function () {
     function getStub() {
         var authid = 1;
         sandbox.stub(request, "get").withArgs('http://acoolname.cloudapp.net/customer/' + authid).yields(
-            null, null, JSON.stringify({id: authid, hash: "$2a$10$1xKYkCVVt5Rx9XZAEsFXmOhIM3LI4aw0IkHNCPBJQbsGlBZakqjY2"}));
+            null, {statusCode: 200}, JSON.stringify({id: authid, hash: "$2a$10$1xKYkCVVt5Rx9XZAEsFXmOhIM3LI4aw0IkHNCPBJQbsGlBZakqjY2"}));
     }
 
     after(function () {  //Stop server after the test
