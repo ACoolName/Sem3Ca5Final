@@ -59,6 +59,13 @@ angular.module('AngularApp.home', ['ngRoute'])
                         }
 
                         deals.forEach(function (entry) {
+                            if(entry.imageLink==null || entry.imageLink=="" || entry.imageLink==undefined)
+                                entry.imageLink="N/A";
+                            if(entry.startDate==null || entry.startDate=="" || entry.startDate==undefined)
+                                entry.startDate="N/A";
+                            if(entry.endDate==null || entry.endDate=="" || entry.endDate==undefined)
+                                entry.endDate="N/A";
+
                             entry.origin = originInject[parseInt(entry.origin)];
                             entry.class = classInject[parseInt(entry.class)];
                             entry.unit = unitInject[parseInt(entry.unit)];

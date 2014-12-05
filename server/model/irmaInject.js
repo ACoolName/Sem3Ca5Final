@@ -28,9 +28,9 @@ injector.inject = function (callback) {
                 p.origin = 4;  //origin 4 => Irma
                 p.title = entry.displayName;
                 p.imageLink = entry.freeTextImageUrl;   //freeTextImageUrl
-//                p.startDate;
-//                p.endDate;
-//                p.class;
+                //p.startDate = "";
+                //p.endDate = "";
+                //p.class ="";
                 p.date = Date.now();
                 p.unit = extractUnit(entry.pricePerUnitText);         //pricePerUnitText
                 p.price = entry.salesPrice.value;  //sales price{value}
