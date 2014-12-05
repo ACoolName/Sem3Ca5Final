@@ -1,15 +1,19 @@
-'use strict';
+"use strict";
 
 /* Directives */
 
-angular.module('AngularApp.directives', []).
-    directive('angularLinks', function () {
+angular.module("AngularApp.directives", []).
+    directive("dealsTableDisplay", function () {
         return {
-            restrict: 'AE',
-            replace: 'true',
-            template: '<ul style="list-style-type: none">' +
-                '<li><a href="http://www.sitepoint.com/practical-guide-angularjs-directives/">A practical Guide</a></li>' +
-                '<li><a href="http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-i-the-fundamentals">Creating Custom Directives</a></li>' +
-                '</ul>'
+            restrict: "AE",
+            replace: "true",
+            templateUrl:"directiveTemplates/dealsTableDisplayTemplate.html"
         };
+    }).
+    directive("searchBar",function(){
+        return{
+            restrict:"AE",
+            replace:"true",
+            templateUrl:"directiveTemplates/searchTemplate.html"
+        }
     });

@@ -1,0 +1,23 @@
+<div>
+    <table class=table table-striped>
+        <thead>
+        <tr>
+            <th ng-repeat="thead in tableHeaders"><a href=""
+                                                     ng-click="returnParentScope().orderByField = thead ;returnParentScope().reverse=!reverse">{{thead}}</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="tbody in deals.slice(((currentPage-1)*5), ((currentPage)*5)) | filter:searchRes | orderBy:orderByField:reverse ">
+            <td ng-repeat="value in tableHeaders ">
+                <div ng-if="value == 'imageLink'"><img src={{tbody[value]}}></div>
+                <div ng-if="value!=='imageLink'"> {{tbody[value]}}</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize"
+                class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"
+                ng-change="pageChanged()"></pagination>
+</div>

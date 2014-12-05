@@ -9,44 +9,51 @@ angular.module('AngularApp.home', ['ngRoute'])
     }])
 
     .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
+        $scope.orderByField="";
+        $scope.reverse=false;
+
+        $scope.maxSize = 5;
+        $scope.currentPage = 1;
+        $scope.itemsPerPage=5;
+
+        $scope.returnParentScope=function(){
+            return $scope
+        }
+        $scope.doSearch= function(){
+                $scope.searchRes=$scope.searchTerm;
+        }
 
         dealsFactory.getAllDeals().success(function (deals) {
-            var originInject = "shit";
-            var classInject = "shit";
-            var unitInject = "shit";
-            var $http = dealsFactory.getAllDeals.http;
 
-            $http({
-                method: 'GET',
-                url: '/rest/v1/Origin'
-            }).then(function (origins) {
+            $scope.tableHeaders = Object.keys(deals[0]);
+            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
+            var originInject = "";
+            var classInject = "";
+            var unitInject = "";
+            deals.forEach(function (entry){
+                if(entry.origin==1){
+                    entry.imageLink = 'http://www.netto.dk'+entry.imageLink
+                }
+            })
+
+            dealsFactory.getOrigin().success(function (origins) {
                 originInject = origins;
 
-                $http({
-                    method: 'GET',
-                    url: '/rest/v1/Class'
-                }).then(function (classes) {
+                dealsFactory.getClass().success(function (classes) {
                     classInject = classes;
 
-                    $http({
-                        method: 'GET',
-                        url: '/rest/v1/Unit'
-                    }).then(function (units) {
+                    dealsFactory.getUnit().success(function (units) {
                         unitInject = units;
 
-                        originInject = originInject.data;
-                        classInject = classInject.data;
-                        unitInject = unitInject.data;
-
                         var maxLen = Math.max(originInject.length, classInject.length, unitInject.length);
-                        for(var i = 0; i < maxLen; i++) {
-                            if(i < originInject.length) {
+                        for (var i = 0; i < maxLen; i++) {
+                            if (i < originInject.length) {
                                 originInject[i] = originInject[i].title;
                             }
-                            if(i < classInject.length) {
+                            if (i < classInject.length) {
                                 classInject[i] = classInject[i].title;
                             }
-                            if(i < unitInject.length) {
+                            if (i < unitInject.length) {
                                 unitInject[i] = unitInject[i].title;
                             }
                         }
@@ -56,7 +63,6 @@ angular.module('AngularApp.home', ['ngRoute'])
                             entry.class = classInject[parseInt(entry.class)];
                             entry.unit = unitInject[parseInt(entry.unit)];
                         });
-                        console.log(deals);
                     }, function (err) {
                         console.log("error");
                         unitInject = null;
@@ -68,11 +74,8 @@ angular.module('AngularApp.home', ['ngRoute'])
             }, function (err) {
                 console.log("error");
                 originInject = null;
-            });
-
-            $scope.tableHeaders = Object.keys(deals[0]);
-            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
+            })
             $scope.deals = deals;
+            $scope.totalItems=deals.length;
         })
-    }])
-;
+    }]);

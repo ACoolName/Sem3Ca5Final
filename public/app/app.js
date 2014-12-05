@@ -9,7 +9,8 @@ angular.module('AngularApp', [
     'AngularApp.factories',
     'AngularApp.filters',
     'AngularApp.home',
-    'AngularApp.register'
+    'AngularApp.register',
+    'ui.bootstrap'
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/home'});

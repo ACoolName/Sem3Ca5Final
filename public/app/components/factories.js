@@ -21,16 +21,43 @@ angular.module('AngularApp.factories', [])
         };
     })
     .factory('dealsFactory', function ($http) {
-        var getAllDeals= function(){
+
+        var getAllDeals= function() {
             return $http({
-                method:'GET',
-                url:'/rest/v1/Product'
+                method: 'GET',
+                url: '/rest/v1/Product'
             })
-        };
+        }
+
+        var getOrigin = function(){
+            return $http({
+                method: 'GET',
+                url: '/rest/v1/Origin'
+            })
+        }
+
+        var getClass= function(){
+            return $http({
+                method: 'GET',
+                url: '/rest/v1/Class'
+            })
+        }
+
+        var getUnit = function(){
+            return $http({
+                method: 'GET',
+                url: '/rest/v1/Unit'
+            })
+        }
+
+
         getAllDeals.http = $http;
 
         return{
-            getAllDeals:getAllDeals
+            getAllDeals:getAllDeals,
+            getUnit:getUnit,
+            getClass : getClass,
+            getOrigin: getOrigin
         }
 
     })
