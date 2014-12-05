@@ -9,11 +9,32 @@ angular.module('AngularApp.home', ['ngRoute'])
     }])
 
     .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
+        $scope.orderByField="";
+        $scope.reverse=false;
+
+        $scope.maxSize = 5;
+        $scope.currentPage = 1;
+        $scope.itemsPerPage=5;
+
+        $scope.returnParentScope=function(){
+            return $scope
+        }
+        $scope.doSearch= function(){
+                $scope.searchRes=$scope.searchTerm;
+        }
 
         dealsFactory.getAllDeals().success(function (deals) {
+
+            $scope.tableHeaders = Object.keys(deals[0]);
+            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
             var originInject = "";
             var classInject = "";
             var unitInject = "";
+            deals.forEach(function (entry){
+                if(entry.origin==1){
+                    entry.imageLink = 'http://www.netto.dk'+entry.imageLink
+                }
+            })
 
             dealsFactory.getOrigin().success(function (origins) {
                 originInject = origins;
@@ -38,14 +59,10 @@ angular.module('AngularApp.home', ['ngRoute'])
                         }
 
                         deals.forEach(function (entry) {
-                            if(entry.origin==1){
-                                entry.imageLink = 'http://www.netto.dk'+entry.imageLink
-                            }
                             entry.origin = originInject[parseInt(entry.origin)];
                             entry.class = classInject[parseInt(entry.class)];
                             entry.unit = unitInject[parseInt(entry.unit)];
                         });
-                        console.log(deals);
                     }, function (err) {
                         console.log("error");
                         unitInject = null;
@@ -58,9 +75,7 @@ angular.module('AngularApp.home', ['ngRoute'])
                 console.log("error");
                 originInject = null;
             })
-
-            $scope.tableHeaders = Object.keys(deals[0]);
-            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
             $scope.deals = deals;
+            $scope.totalItems=deals.length;
         })
     }]);
