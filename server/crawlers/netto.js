@@ -10,19 +10,33 @@ var productImageURL = "#hdimageUrl";
 var productStartDate = "#hdStartDate";
 var productEndDate = "#hdEndDate";
 
-function priceExtract(string) {
-    string = string.replace(/,/g, '.');
-    string = string.replace(/-/g, '0');
+function priceExtract(whole, part) {
+    whole = whole.replace(/,/g, '.');
+    whole = whole.replace(/-/g, '0');
     var regex = new RegExp("[0-9]*[.][0-9]+", "i");
-    var match = regex.exec(string);
-    return parseFloat(match[0]);
+    var match = regex.exec(whole);
+    if (match != null) {
+	return parseFloat(match[0] + "." + part);
+    } else {
+	return parseFloat(whole + "." + part);
+    }
+}
+
+function selectPart(selected){
+    if (selected.length == 0) {
+	return 0;
+    } else {
+	return selected[0].data;
+    }
 }
 
 function extractItem(item, date, $) {
     var extract = function (search) {
         return $(item).find(search)['0'].attribs.value;
     }
+
     var pr = $(item).find(productValue)['0'].children[0].data;
+    var part = selectPart($(item).find(productValue)['0'].children[1].children);
     
     return {'name': extract(productname),
         'description': extract(productDescription),
@@ -30,7 +44,7 @@ function extractItem(item, date, $) {
         'startDate': extract(productStartDate),
         'endDate': extract(productEndDate),
         'date': date,
-	'price': priceExtract(pr)};
+	'price': priceExtract(pr, part)};
 }
 
 /*
