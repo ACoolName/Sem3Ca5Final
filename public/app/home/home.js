@@ -16,6 +16,7 @@ angular.module('AngularApp.home', ['ngRoute'])
         $scope.currentPage = 1;
         $scope.itemsPerPage=5;
 
+
         $scope.returnParentScope=function(){
             return $scope
         }
@@ -27,6 +28,7 @@ angular.module('AngularApp.home', ['ngRoute'])
 
             $scope.tableHeaders = Object.keys(deals[0]);
             $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
+            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('imageLink'), 1);
             var originInject = "";
             var classInject = "";
             var unitInject = "";

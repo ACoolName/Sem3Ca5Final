@@ -3,13 +3,18 @@
 <head>
     <meta charset="utf8"/>
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/trNgGrid/release/trNgGrid.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.0.3/slate/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="stylesheets/animations.css">
+
 </head>
-<body>
+<body ng-class="{'skip-animations':disabled}" class="ng-cloak">
 
 <div ng-controller="AppCtrl">
-    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div>
+    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation" >
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -51,15 +56,18 @@
             </div>
         </div>
     </nav>
+    </div>
 
-    <div style="padding-left: 10px; float: left; padding-right: 10px" class="container">
+    <div style="padding-left: 10px; float: inherit; padding-right: 10px" class="container">
         <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
-        <div ng-view="ng-view"></div>
+            <div ng-view class="view-animate"></div>
     </div>
 </div>
-<script src="vendor/angular/angular.min.js"></script>
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/angular-animate/angular-animate.js"></script>
 <script src="vendor/angular-route/angular-route.min.js"></script>
 <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="vendor/trNgGrid/release/src/js/trNgGrid.js"></script>
 <script src="app/app.js"></script>
 <script src="app/home/home.js"></script>
 <script src="app/register/register.js"></script>

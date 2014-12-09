@@ -20,7 +20,7 @@ function doneLog(data) {
 
 Product.collection.drop(function () {
     console.log("Start " + Date.now());
-    netto.start(doneLog);
+    //netto.start(doneLog);
     fakta.start(doneLog);
     irma.start(doneLog);
 });

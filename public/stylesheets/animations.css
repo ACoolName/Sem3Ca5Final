@@ -1,0 +1,41 @@
+.view-animate-container {
+    background:white;
+    border:1px solid black;
+    list-style:none;
+    margin:0;
+    padding:0 10px;
+}
+
+.view-animate {
+    padding:10px;
+}
+
+.view-animate.ng-enter, .view-animate.ng-leave {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.4s;
+
+    display:block;
+    width:70%;
+    border-left:0px;
+
+    position:absolute;
+    top:7%;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:10px;
+}
+
+.view-animate.ng-enter {
+    margin-top: 1%;
+    top:7%;
+    left:100%;
+}
+.view-animate.ng-enter.ng-enter-active {
+    left:12.4%;
+}
+.view-animate.ng-leave.ng-leave-active {
+    margin-top: 1%;
+    top:7%;
+    left:-100%;
+}
