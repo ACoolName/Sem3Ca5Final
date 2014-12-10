@@ -11,6 +11,12 @@ router.get('/', function (req, res) {
     res.redirect("app/index.html")
 });
 
+router.post('/user', function (req, res) {
+    var user = new User(req.body);
+    res.status(200);
+    res.end();
+});
+
 
 router.post('/authenticate', function (req, res) {
 

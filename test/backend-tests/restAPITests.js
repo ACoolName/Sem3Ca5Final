@@ -1,17 +1,20 @@
 global.TEST_DATABASE = "mongodb://localhost/TestDataBase_Final";
-global.SKIP_AUTHENTICATION = true;  //Skip security
+global.SKIP_AUTHENTICATION = true;
+global.JPA = true;
 
 var should = require("should");
+var sinon = require("sinon");
 var app = require("../../server/app");
-var http = require("http");
+var request = require("request");
 var testPort = 9999;
 var testServer;
 var mongoose = require("mongoose");
+var User = mongoose.model("User");
 
 describe('REST API for /rest', function () {
-    //Start the Server before the TESTS
-    before(function (done) {
+    var sandbox;
 
+    before(function (done) {
         testServer = app.listen(testPort, function () {
             console.log("Server is listening on: " + testPort);
             done();
@@ -22,11 +25,37 @@ describe('REST API for /rest', function () {
     });
 
     beforeEach(function (done) {
+        sandbox = sinon.sandbox.create();
+        User.remove({}, function () {
+            done();
+        });
     });
 
-    after(function () {  //Stop server after the test
-        //Uncomment the line below to completely remove the database, leaving the mongoose instance as before the tests
-        //mongoose.connection.db.dropDatabase();
+    afterEach(function () {
+        sandbox.restore();
+    });
+
+    after(function () {
         testServer.close();
     });
+
+    function postStub() {
+        var authid = 1;
+        sandbox.stub(request, "post").withArgs('http://acoolname.cloudapp.net/customer').yields(
+            null, {statusCode: 200}, JSON.stringify({id: authid}));
+    }
+
+    describe("/user", function () {
+        it("should add a user to the database with correct authid", function (done) {
+            request.post('http://localhost:' + testPort + '/user',
+                {form: { username: "test1", password: "bacon"}},
+                function (error, response, body) {
+                    response.statusCode.should.equal(200);
+                    User.findOne({username: 'test1'}, function (err, user) {
+                        user.authid.should.equal(1);
+                        done();
+                    });
+                });
+        })
+    })
 });

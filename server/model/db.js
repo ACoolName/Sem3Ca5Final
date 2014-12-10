@@ -7,7 +7,7 @@ if (typeof global.TEST_DATABASE != "undefined") {
     dbURI = global.TEST_DATABASE;
 }
 else {
-    dbURI = 'mongodb://localhost/Sem3CA5Final';
+    dbURI = 'mongodb://localhost/testdb';
 }
 
 mongoose.connect(dbURI);
