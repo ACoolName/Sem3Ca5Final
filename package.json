@@ -30,6 +30,7 @@
     "karma-jasmine": "~0.1.5",
     "karma-junit-reporter": "~0.2.2",
     "mocha": "~2.0.1",
+    "needle": "^0.7.10",
     "protractor": "~1.1.1",
     "request": "~2.48.0",
     "shelljs": "~0.2.6",

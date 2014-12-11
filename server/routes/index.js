@@ -12,15 +12,27 @@ router.get('/', function (req, res) {
 });
 
 router.post('/user', function (req, res) {
-    var user = new User(req.body);
-    res.status(200);
-    res.end();
+    var password = req.body.password;
+    request.post('http://acoolname.cloudapp.net/customer',
+        {form: {password: password}},
+        function (error, response, body) {
+            if(response.statusCode == 200) {
+                var user = req.body;
+                user["authid"] = JSON.parse(body).id;
+                User.add(user);
+                res.status(200);
+                res.end();
+            } else {
+                res.status(400);
+                res.end();
+            }
+        });
 });
 
 
 router.post('/authenticate', function (req, res) {
-
-    if(!global.JPA) { //Set the global to false if you don't want to use JPA
+    console.log("dsads");
+    if (!global.JPA) { //Set the global to false if you don't want to use JPA
         if (req.body.username === 'student' && req.body.password === 'test') {
             var profile = {
                 username: 'Bo the Student',
@@ -52,25 +64,25 @@ router.post('/authenticate', function (req, res) {
     }
 
     User.get(req.body.username, function (err, user) {
-        if(user == null) {
+        if (user == null) {
             res.status(404).send('No such with that username');
             return;
         }
         request.get('http://acoolname.cloudapp.net/customer/' + user.authid, function (error, response, body) {
-            if(response.statusCode != 200) {
+            if (response.statusCode != 200) {
                 res.status(500).send('Internal server error');
                 return;
             }
             var hash = JSON.parse(body).hash;
-            bcrypt.compare(req.body.password, hash, function(err, correct) {
-                if(correct == true) {
+            bcrypt.compare(req.body.password, hash, function (err, correct) {
+                if (correct == true) {
                     var profile = {
                         username: user.username,
                         role: user.role,
                         id: user._id
                     };
                     var secret;
-                    if(user.role === "admin") {
+                    if (user.role === "admin") {
                         secret = require("../security/secrets").secretTokenAdmin;
                     } else if (user.role === "user") {
                         secret = require("../security/secrets").secretTokenUser;

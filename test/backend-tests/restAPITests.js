@@ -10,6 +10,7 @@ var testPort = 9999;
 var testServer;
 var mongoose = require("mongoose");
 var User = mongoose.model("User");
+var needle = require("needle");
 
 describe('REST API for /rest', function () {
     var sandbox;
@@ -21,6 +22,7 @@ describe('REST API for /rest', function () {
         })
             .on('error', function (err) {
                 console.log(err);
+                done();
             });
     });
 
@@ -41,18 +43,19 @@ describe('REST API for /rest', function () {
 
     function postStub() {
         var authid = 1;
-        sandbox.stub(request, "post").withArgs('http://acoolname.cloudapp.net/customer').yields(
+        sandbox.stub(request, "post").yields(
             null, {statusCode: 200}, JSON.stringify({id: authid}));
     }
 
     describe("/user", function () {
         it("should add a user to the database with correct authid", function (done) {
-            request.post('http://localhost:' + testPort + '/user',
-                {form: { username: "test1", password: "bacon"}},
-                function (error, response, body) {
+            postStub();
+            needle.post('http://localhost:' + testPort + '/user',
+                { username: "test1", password: "bacon"},
+                function (error, response) {
                     response.statusCode.should.equal(200);
                     User.findOne({username: 'test1'}, function (err, user) {
-                        user.authid.should.equal(1);
+                        user.authid.should.equal('1');
                         done();
                     });
                 });
