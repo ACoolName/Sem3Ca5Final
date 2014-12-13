@@ -10,11 +10,4 @@ angular.module("AngularApp.directives", []).
             require: ['ngModel'],
             templateUrl:"directiveTemplates/dealsTableDisplayTemplate.html"
         };
-    }).
-    directive("searchBar",function(){
-        return{
-            restrict:"AE",
-            replace:"true",
-            templateUrl:"directiveTemplates/searchTemplate.html"
-        }
     });
