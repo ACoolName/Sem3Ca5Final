@@ -9,24 +9,12 @@ angular.module('AngularApp.home', ['ngRoute'])
     }])
 
     .controller('homeCtrl', ['$scope', 'dealsFactory', function ($scope, dealsFactory) {
-        $scope.orderByField="";
-        $scope.reverse=false;
-
-        $scope.maxSize = 5;
-        $scope.currentPage = 1;
-        $scope.itemsPerPage=5;
-
-        $scope.returnParentScope=function(){
-            return $scope
-        }
-        $scope.doSearch= function(){
-                $scope.searchRes=$scope.searchTerm;
-        }
 
         dealsFactory.getAllDeals().success(function (deals) {
 
             $scope.tableHeaders = Object.keys(deals[0]);
             $scope.tableHeaders.splice($scope.tableHeaders.indexOf('_id'), 1);
+            $scope.tableHeaders.splice($scope.tableHeaders.indexOf('imageLink'), 1);
             var originInject = "";
             var classInject = "";
             var unitInject = "";
@@ -83,6 +71,5 @@ angular.module('AngularApp.home', ['ngRoute'])
                 originInject = null;
             })
             $scope.deals = deals;
-            $scope.totalItems=deals.length;
         })
     }]);

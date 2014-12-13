@@ -18,25 +18,26 @@ describe('AngularApp.home module', function () {
             expect(ctrl).toBeDefined();
         });
 
-        it('should get the data',function(){
-            var dummy=[{
-                    name:"asd",
-                    age:"something",
-                    city:"something else"
-                },
-                    {
-                        name:"asd",
-                        age:"asd",
-                        city:"asd"
-                    },
-                {
-                    name:"",
-                    age:"",
-                    city:""
-                }]
+        it('should get the data', function () {
+            var dummy = [{
+                origin: undefined,
+                price: '2',
+                title: 'test',
+                class: undefined,
+                unit: undefined,
+                date: '2014-12-04',
+                imageLink: "someLink",
+                startDate: '2014-12-04',
+                endDate: '2014-12-04'
+            }];
             httpBackendMock.expectGET('/rest/v1/Product').respond(dummy);
+            httpBackendMock.expectGET('/rest/v1/Origin').respond("");
+            httpBackendMock.expectGET('/rest/v1/Class').respond("");
+            httpBackendMock.expectGET('/rest/v1/Unit').respond("");
+
             httpBackendMock.flush();
-            var expectedTableHeaders=["name","age","city"];
+
+            var expectedTableHeaders = ['origin', 'price', 'title', 'class', 'unit', 'date', 'startDate'];
             expect(scope.tableHeaders).toEqual(expectedTableHeaders);
             expect(scope.deals).toEqual(dummy);
         })
