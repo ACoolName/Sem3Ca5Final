@@ -7,7 +7,7 @@ if (typeof global.TEST_DATABASE != "undefined") {
     dbURI = global.TEST_DATABASE;
 }
 else {
-    dbURI = 'mongodb://localhost/testdb';
+    dbURI = 'mongodb://admin:admin@ds063630.mongolab.com:63630/finalcaapplication';
 }
 
 mongoose.connect(dbURI);
@@ -56,7 +56,7 @@ var productSchema = new mongoose.Schema({
     origin: Number,
     price: Number,
     title: String,
-    class: Number,
+    class: String,
     unit: Number,
     date: Date,
     imageLink: String,
